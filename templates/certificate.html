@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Certificate · {{ participant.student_name }}</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body class="certificate-page">
+  <header class="public-header">
+    <a class="brand" href="/" aria-label="NGK Portal — Nehru Grand Kacheri">
+      <span class="brand-mark">N</span>
+      <span class="brand-copy"><strong>NGK Portal</strong><small>Nehru Grand Kacheri</small></span>
+    </a>
+    <a class="button secondary" href="{{ url_for('certificate_pdf', token=token, download=1) }}">↓ Download PDF</a>
+  </header>
+  <main class="certificate-view">
+    <div class="certificate-paper">
+      <div class="paper-border">
+        <div class="paper-seal">N</div>
+        <div class="paper-org">{{ config.organization|upper }}</div>
+        <h1>{{ config.title }}</h1>
+        <p>{{ config.intro }}</p>
+        <div class="paper-name">{{ participant.student_name }}</div>
+        <p>{{ config.participation_text }}</p>
+        <h2>{{ participant.event_name }}</h2>
+        <p>held on {{ participant.event_date or 'the event date' }}</p>
+        <div class="paper-sign">{{ config.organizer }}</div>
+        <div class="paper-certificate-id">Certificate ID: {{ participant.certificate_id }}</div>
+      </div>
+    </div>
+    <div class="certificate-actions">
+      <a class="button primary" href="{{ url_for('certificate_pdf', token=token, download=1) }}">Download certificate</a>
+      <a class="button secondary" href="/">Find another certificate</a>
+    </div>
+  </main>
+</body>
+</html>

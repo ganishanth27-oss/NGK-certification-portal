@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6f7fb">
+  <title>NGK Portal · Nehru Grand Kacheri</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body class="public-body">
+  <header class="public-header">
+    <a class="brand" href="/" aria-label="NGK Portal — Nehru Grand Kacheri">
+      <span class="brand-mark">N</span>
+      <span class="brand-copy"><strong>NGK Portal</strong><small>Nehru Grand Kacheri</small></span>
+    </a>
+    <a class="subtle-link" href="/admin">Admin sign in <span aria-hidden="true">→</span></a>
+  </header>
+
+  <main class="public-main">
+    <section class="hero-copy">
+      <span class="eyebrow">NEHRU GRAND KACHERI</span>
+      <h1>Participation that deserves<br><span>to be remembered.</span></h1>
+      <p>Find and download your official participation certificates in a few steps.</p>
+    </section>
+
+    <section class="lookup-card">
+      <div class="card-heading">
+        <div class="heading-icon" aria-hidden="true">✦</div>
+        <div>
+          <h2>Get your participation certificate</h2>
+          <p>Enter the mobile number and email address used during registration.</p>
+        </div>
+      </div>
+      <form id="verify-form">
+        <label>Mobile number<input name="mobile" type="tel" inputmode="tel" autocomplete="tel" placeholder="Mobile number" required></label>
+        <label>Email address<input name="email" type="email" autocomplete="email" placeholder="Email address" required></label>
+        <button class="button primary full" type="submit">Find my certificates <span aria-hidden="true">→</span></button>
+        <p id="verify-error" class="form-message" role="status"></p>
+      </form>
+      <div id="results" class="results hidden"></div>
+    </section>
+    <p class="privacy-note"><span>▣</span> Your details are only used to securely locate your certificates.</p>
+  </main>
+
+  <footer class="public-footer">© <span id="year"></span> NGK Portal <span>·</span> Nehru Grand Kacheri</footer>
+  <script src="/static/public.js"></script>
+</body>
+</html>

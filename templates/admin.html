@@ -1,0 +1,1084 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6f7fb">
+  <title>Admin · NGK Portal · Nehru Grand Kacheri</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+
+<body class="admin-body">
+
+  <div id="login-view" class="login-wrap">
+    <a class="brand login-brand" href="/">
+      <span class="brand-mark">N</span>
+      <span class="brand-copy"><strong>NGK Portal</strong><small>Nehru Grand Kacheri</small></span>
+    </a>
+
+<section class="login-card">
+  <div class="heading-icon">↗</div>
+
+  <h1>Admin sign in</h1>
+  <p>Manage events, participants and certificate templates.</p>
+
+  <form id="login-form">
+    <label>
+      Email address
+      <input
+        name="email"
+        type="email"
+        required
+        autocomplete="username"
+      >
+    </label>
+
+    <label>
+      Password
+      <input
+        name="password"
+        type="password"
+        required
+        autocomplete="current-password"
+      >
+    </label>
+
+    <p id="login-error" class="form-message"></p>
+
+    <button class="button primary full">
+      Sign in <span>→</span>
+    </button>
+  </form>
+
+  <a class="back-link" href="/">
+    ← Back to certificate lookup
+  </a>
+</section>
+
+  </div>
+
+  <div id="dashboard-view" class="dashboard-shell hidden">
+
+<aside class="sidebar">
+
+  <a class="brand side-brand" href="/admin">
+    <span class="brand-mark">N</span>
+    <span class="brand-copy"><strong>NGK Portal</strong><small>Nehru Grand Kacheri</small></span>
+  </a>
+
+  <div class="side-label">WORKSPACE</div>
+
+  <nav class="side-nav">
+
+    <button class="nav-item active" data-page="overview">
+      <span>▦</span>
+      Dashboard
+    </button>
+
+    <button class="nav-item" data-page="events">
+      <span>◷</span>
+      Events
+    </button>
+
+    <button class="nav-item" data-page="participants">
+      <span>♧</span>
+      Participants
+    </button>
+
+    <button class="nav-item" data-page="templates">
+      <span>▧</span>
+      Certificate templates
+    </button>
+
+  </nav>
+
+  <div class="sidebar-bottom">
+
+    <div class="help-box">
+      <strong>Need a hand?</strong>
+      <p>
+        Import participant lists or customize your certificate design.
+      </p>
+    </div>
+
+    <button class="nav-item" id="logout-button">
+      <span>↪</span>
+      Sign out
+    </button>
+
+  </div>
+
+</aside>
+
+
+<div class="admin-main">
+
+  <header class="topbar">
+
+    <div class="mobile-brand">
+      <span class="brand-mark">N</span>
+      <span class="brand-copy"><strong>NGK Portal</strong><small>Nehru Grand Kacheri</small></span>
+    </div>
+
+    <div class="topbar-spacer"></div>
+
+    <span class="admin-avatar">A</span>
+
+    <div class="admin-user">
+      <strong>Administrator</strong>
+      <small id="admin-email"></small>
+    </div>
+
+  </header>
+
+
+  <main class="content-area">
+
+    <div id="toast" class="toast hidden" role="status"></div>
+
+
+    <!-- =========================
+         DASHBOARD
+    ========================== -->
+
+    <section class="page active" id="page-overview">
+
+      <div class="page-title-row">
+
+        <div>
+          <span class="eyebrow">OVERVIEW</span>
+          <h1>Dashboard</h1>
+          <p>
+            Here’s what’s happening across your events.
+          </p>
+        </div>
+
+        <button class="button primary" id="new-event-top">
+          ＋ Create event
+        </button>
+
+      </div>
+
+
+      <div id="stat-cards" class="stat-grid"></div>
+
+
+      <div class="dashboard-grid">
+
+        <section class="panel">
+
+          <div class="panel-heading">
+
+            <div>
+              <h2>Recent events</h2>
+              <p>Your latest event activity</p>
+            </div>
+
+            <button class="text-button" data-goto="events">
+              View all →
+            </button>
+
+          </div>
+
+          <div id="recent-events"></div>
+
+        </section>
+
+
+        <section class="panel">
+
+          <div class="panel-heading">
+
+            <div>
+              <h2>Recent participants</h2>
+              <p>Recently added to your events</p>
+            </div>
+
+            <button class="text-button" data-goto="participants">
+              View all →
+            </button>
+
+          </div>
+
+          <div id="recent-participants"></div>
+
+        </section>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         EVENTS
+    ========================== -->
+
+    <section class="page" id="page-events">
+
+      <div class="page-title-row">
+
+        <div>
+          <span class="eyebrow">ORGANIZE</span>
+          <h1>Events</h1>
+          <p>
+            Create events and manage their participant lists.
+          </p>
+        </div>
+
+        <button class="button primary" id="new-event">
+          ＋ Create event
+        </button>
+
+      </div>
+
+
+      <div class="panel">
+
+        <div class="toolbar">
+
+          <input
+            id="event-search"
+            class="search-input"
+            placeholder="Search events…"
+          >
+
+          <span id="event-count" class="muted"></span>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Venue</th>
+                <th>Participants</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+
+            </thead>
+
+            <tbody id="events-table"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         PARTICIPANTS
+    ========================== -->
+
+    <section class="page" id="page-participants">
+
+      <div class="page-title-row">
+
+        <div>
+          <span class="eyebrow">PEOPLE</span>
+          <h1>Participants</h1>
+          <p>
+            Search, edit, import and export your participant records.
+          </p>
+        </div>
+
+
+        <div class="button-row">
+
+          <button class="button secondary" id="export-csv">
+            ↓ Export CSV
+          </button>
+
+          <button class="button secondary" id="export-xlsx">
+            ↓ Export Excel
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="panel">
+
+        <div class="toolbar">
+
+          <input
+            id="participant-search"
+            class="search-input"
+            placeholder="Search by name, mobile or email…"
+          >
+
+          <select
+            id="participant-event-filter"
+            class="select-input"
+          >
+            <option value="">All events</option>
+          </select>
+
+          <button
+            class="button primary small"
+            id="import-from-people"
+          >
+            ↑ Import participants
+          </button>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>Participant</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Event</th>
+                <th>Certificate</th>
+                <th></th>
+              </tr>
+
+            </thead>
+
+            <tbody id="participants-table"></tbody>
+
+          </table>
+
+        </div>
+
+
+        <div
+          id="participant-empty"
+          class="empty-state hidden"
+        >
+          No participants match your search.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CERTIFICATE TEMPLATES
+    ========================== -->
+
+    <section class="page" id="page-templates">
+
+      <div class="page-title-row">
+
+        <div>
+          <span class="eyebrow">DESIGN</span>
+          <h1>Certificate templates</h1>
+          <p>
+            Customize certificate text and upload an optional background.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="template-layout">
+
+
+        <section class="panel template-form-panel">
+
+          <div class="panel-heading">
+
+            <div>
+              <h2>Template settings</h2>
+              <p>
+                Choose an event, then tailor its certificate.
+              </p>
+            </div>
+
+          </div>
+
+
+          <label>
+            Event
+            <select
+              id="template-event"
+              class="select-input"
+            ></select>
+          </label>
+
+
+          <div id="template-fields" class="hidden">
+
+            <label>
+              Background image or PDF
+
+              <input
+                type="file"
+                id="template-file"
+                accept=".png,.jpg,.jpeg,.pdf"
+              >
+
+              <small
+                class="field-note"
+                id="template-file-note"
+              >
+                Optional. PNG, JPG or PDF up to 12 MB.
+              </small>
+
+            </label>
+
+
+            <label>
+              Certificate title
+              <input
+                id="cfg-title"
+                maxlength="120"
+              >
+            </label>
+
+
+            <label>
+              Introductory text
+              <input
+                id="cfg-intro"
+                maxlength="200"
+              >
+            </label>
+
+
+            <label>
+              Participation text
+              <input
+                id="cfg-participation"
+                maxlength="200"
+              >
+            </label>
+
+
+            <div class="two-col">
+
+              <label>
+                Organization
+                <input
+                  id="cfg-organization"
+                  maxlength="120"
+                >
+              </label>
+
+              <label>
+                Organizer / signature
+                <input
+                  id="cfg-organizer"
+                  maxlength="120"
+                >
+              </label>
+
+            </div>
+
+
+            <label>
+              Footer text
+              <input
+                id="cfg-footer"
+                maxlength="120"
+              >
+            </label>
+
+
+            <div class="two-col">
+
+              <label>
+                Name font size
+                <input
+                  id="cfg-name-size"
+                  type="number"
+                  min="18"
+                  max="44"
+                >
+              </label>
+
+              <label>
+                Event font size
+                <input
+                  id="cfg-event-size"
+                  type="number"
+                  min="14"
+                  max="28"
+                >
+              </label>
+
+            </div>
+
+
+            <label>
+              Accent color
+              <input
+                id="cfg-accent"
+                type="color"
+              >
+            </label>
+
+
+            <button
+              id="save-template"
+              class="button primary"
+            >
+              Save template
+            </button>
+
+          </div>
+
+        </section>
+
+
+        <section class="panel preview-panel">
+
+          <div class="panel-heading">
+
+            <div>
+              <h2>Live preview</h2>
+              <p>
+                Certificate preview
+              </p>
+            </div>
+
+            <span class="live-pill">
+              PREVIEW
+            </span>
+
+          </div>
+
+
+          <div class="certificate-mock">
+
+            <div class="mock-inner">
+
+              <div class="mock-seal">
+                E
+              </div>
+
+              <div
+                id="preview-title"
+                class="mock-title"
+              >
+                CERTIFICATE OF PARTICIPATION
+              </div>
+
+              <div
+                id="preview-intro"
+                class="mock-intro"
+              >
+                This certificate is proudly presented to
+              </div>
+
+              <div class="mock-name">
+                Participant name
+              </div>
+
+              <div
+                id="preview-participation"
+                class="mock-intro"
+              >
+                For successfully participating in
+              </div>
+
+              <div
+                id="preview-event"
+                class="mock-event"
+              >
+                Select an event
+              </div>
+
+              <div class="mock-date">
+                held on the event date
+              </div>
+
+              <div
+                class="mock-signature"
+                id="preview-organizer"
+              >
+                Nehru Grand Kacheri
+              </div>
+
+              <div
+                class="mock-org"
+                id="preview-organization"
+              >
+                Nehru Grand Kacheri
+              </div>
+
+              <div class="mock-cid">
+                Certificate ID
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <p class="preview-note">
+            Dynamic fields (name, event, date and certificate ID)
+            are filled in when a participant downloads their certificate.
+          </p>
+
+        </section>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+  </div>
+
+  <!-- =========================
+       CREATE / EDIT EVENT MODAL
+  ========================== -->
+
+  <dialog id="event-dialog" class="modal">
+
+<form
+  id="event-form"
+  
+>
+
+  <div class="modal-header">
+
+    <div>
+
+      <span class="eyebrow">
+        EVENT DETAILS
+      </span>
+
+      <h2 id="event-dialog-title">
+        Create event
+      </h2>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="icon-button"
+     
+     
+      aria-label="Close"
+     data-close-dialog>
+      ×
+    </button>
+
+  </div>
+
+
+  <input
+    type="hidden"
+    name="id"
+  >
+
+
+  <label>
+    Event name
+
+    <input
+      name="name"
+      required
+      maxlength="200"
+      placeholder="Event name"
+    >
+  </label>
+
+
+  <div class="two-col">
+
+    <label>
+      Event date
+
+      <input
+        name="event_date"
+        type="date"
+      >
+    </label>
+
+
+    <label>
+      Venue
+
+      <input
+        name="venue"
+        maxlength="200"
+        placeholder="Venue"
+      >
+    </label>
+
+  </div>
+
+
+  <label>
+    Description
+
+    <textarea
+      name="description"
+      rows="3"
+      maxlength="2000"
+    ></textarea>
+  </label>
+
+
+  <label>
+    Status
+
+    <select name="status">
+      <option>Active</option>
+      <option>Draft</option>
+      <option>Completed</option>
+    </select>
+  </label>
+
+
+  <p
+    class="form-message"
+    id="event-error"
+  ></p>
+
+
+  <div class="modal-actions">
+
+    <button
+      type="button"
+      class="button secondary"
+     
+     
+     data-close-dialog>
+      Cancel
+    </button>
+
+
+    <button
+      type="submit"
+      class="button primary"
+      id="save-event"
+      value="default"
+    >
+      Save event
+    </button>
+
+  </div>
+
+</form>
+
+  </dialog>
+
+  <!-- =========================
+       IMPORT PARTICIPANTS MODAL
+  ========================== -->
+
+  <dialog
+    id="import-dialog"
+    class="modal import-modal"
+  >
+
+<form
+  id="import-form"
+  
+>
+
+  <div class="modal-header">
+
+    <div>
+
+      <span class="eyebrow">
+        PARTICIPANT LIST
+      </span>
+
+      <h2>
+        Import participants
+      </h2>
+
+      <p>
+        Choose an event and upload a file to review its rows.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="icon-button"
+     
+     
+      aria-label="Close"
+     data-close-dialog>
+      ×
+    </button>
+
+  </div>
+
+
+  <label>
+    Event
+
+    <select
+      name="event_id"
+      id="import-event"
+      required
+    ></select>
+
+  </label>
+
+
+  <label class="upload-drop">
+
+    <span class="upload-icon">
+      ↑
+    </span>
+
+    <strong>
+      Choose a participant file
+    </strong>
+
+    <small>
+      Excel, CSV, TXT or text-based PDF · up to 15 MB
+    </small>
+
+    <input
+      id="import-file"
+      type="file"
+      accept=".xlsx,.xlsm,.xls,.csv,.txt,.pdf"
+      required
+    >
+
+  </label>
+
+
+  <p
+    class="form-message"
+    id="import-error"
+  ></p>
+
+
+  <div
+    id="import-preview-wrap"
+    class="hidden"
+  >
+
+    <div class="preview-summary">
+
+      <strong id="preview-count"></strong>
+
+      <span>
+        Review and edit cells before importing
+      </span>
+
+    </div>
+
+
+    <div class="table-wrap preview-table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Email</th>
+            <th>Participation</th>
+            <th></th>
+          </tr>
+
+        </thead>
+
+        <tbody id="import-preview"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+  <div class="modal-actions">
+
+    <button
+      type="button"
+      class="button secondary"
+     
+     
+     data-close-dialog>
+      Cancel
+    </button>
+
+
+    <button
+      type="button"
+      class="button secondary"
+      id="parse-import"
+    >
+      Preview file
+    </button>
+
+
+    <button
+      type="button"
+      class="button primary hidden"
+      id="confirm-import"
+    >
+      Import participants
+    </button>
+
+  </div>
+
+</form>
+
+  </dialog>
+
+  <!-- =========================
+       EDIT PARTICIPANT MODAL
+  ========================== -->
+
+  <dialog
+    id="participant-dialog"
+    class="modal"
+  >
+
+<form
+  id="participant-form"
+  
+>
+
+  <div class="modal-header">
+
+    <div>
+
+      <span class="eyebrow">
+        PARTICIPANT RECORD
+      </span>
+
+      <h2>
+        Edit participant
+      </h2>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="icon-button"
+     
+     
+     data-close-dialog>
+      ×
+    </button>
+
+  </div>
+
+
+  <input
+    type="hidden"
+    name="id"
+  >
+
+
+  <label>
+    Name
+
+    <input
+      name="student_name"
+      required
+    >
+  </label>
+
+
+  <div class="two-col">
+
+    <label>
+      Mobile
+
+      <input
+        name="mobile"
+        required
+      >
+    </label>
+
+
+    <label>
+      Email
+
+      <input
+        name="email"
+        type="email"
+        required
+      >
+    </label>
+
+  </div>
+
+
+  <label>
+    Event
+
+    <select
+      name="event_id"
+      id="edit-event"
+      required
+    ></select>
+  </label>
+
+
+  <label>
+    Participation
+
+    <input
+      name="participation"
+    >
+  </label>
+
+
+  <p
+    id="participant-error"
+    class="form-message"
+  ></p>
+
+
+  <div class="modal-actions">
+
+    <button
+      type="button"
+      class="button secondary"
+     
+     
+     data-close-dialog>
+      Cancel
+    </button>
+
+
+    <button
+      type="submit"
+      class="button primary"
+      id="save-participant"
+      value="default"
+    >
+      Save changes
+    </button>
+
+  </div>
+
+</form>
+
+  </dialog>
+
+  <script src="/static/admin.js"></script>
+
+</body>
+</html>
